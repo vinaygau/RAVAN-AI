@@ -46,10 +46,12 @@ def guidance_for(risk: RiskAssessment, agent: RuleBasedDrivingAgent) -> str:
     return "The road ahead is clear. Holding a steady pace."
 
 
-def make_video(output: Path, *, seed: int, duration_s: int, fps: int) -> None:
+def make_video(output: Path, *, voiceover: Path, seed: int, duration_s: int, fps: int) -> None:
     ffmpeg = shutil.which("ffmpeg")
     if ffmpeg is None:
         raise SystemExit("FFmpeg was not found. Install FFmpeg and make sure it is on PATH.")
+    if not voiceover.is_file():
+        raise SystemExit(f"Voice-over file was not found: {voiceover}")
 
     pygame.init()
     simulation = DrivingSimulation(seed=seed)
@@ -60,44 +62,54 @@ def make_video(output: Path, *, seed: int, duration_s: int, fps: int) -> None:
     lane_plan: LanePathPlan = plan_lane_path(simulation, assessment)
     output.parent.mkdir(parents=True, exist_ok=True)
 
-    command = [
-        ffmpeg,
-        "-hide_banner",
-        "-loglevel",
-        "error",
-        "-y",
-        "-f",
-        "rawvideo",
-        "-pix_fmt",
-        "rgb24",
-        "-video_size",
-        f"{WIDTH}x{HEIGHT}",
-        "-framerate",
-        str(fps),
-        "-i",
-        "pipe:0",
-        "-an",
-        "-c:v",
-        "libx264",
-        "-preset",
-        "medium",
-        "-crf",
-        "23",
-        "-pix_fmt",
-        "yuv420p",
-        "-movflags",
-        "+faststart",
-        str(output),
-    ]
-    encoder = subprocess.Popen(command, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
-    if encoder.stdin is None:
-        pygame.quit()
-        raise RuntimeError("Could not open the FFmpeg video stream.")
-
-    frame_count = duration_s * fps
-    dt = 1.0 / fps
-    frames_written = 0
     try:
+        command = [
+            ffmpeg,
+            "-hide_banner",
+            "-loglevel",
+            "error",
+            "-y",
+            "-f",
+            "rawvideo",
+            "-pix_fmt",
+            "rgb24",
+            "-video_size",
+            f"{WIDTH}x{HEIGHT}",
+            "-framerate",
+            str(fps),
+            "-i",
+            "pipe:0",
+            "-i",
+            str(voiceover.resolve()),
+            "-map",
+            "0:v:0",
+            "-map",
+            "1:a:0",
+            "-af",
+            f"apad=pad_dur={duration_s},atrim=duration={duration_s}",
+            "-c:v",
+            "libx264",
+            "-preset",
+            "medium",
+            "-crf",
+            "23",
+            "-pix_fmt",
+            "yuv420p",
+            "-c:a",
+            "aac",
+            "-b:a",
+            "128k",
+            "-movflags",
+            "+faststart",
+            str(output),
+        ]
+        encoder = subprocess.Popen(command, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
+        if encoder.stdin is None:
+            raise RuntimeError("Could not open the FFmpeg video stream.")
+
+        frame_count = duration_s * fps
+        dt = 1.0 / fps
+        frames_written = 0
         for frame_index in range(frame_count):
             if not assessment.collision:
                 action = agent.choose_action(simulation, assessment)
@@ -123,13 +135,13 @@ def make_video(output: Path, *, seed: int, duration_s: int, fps: int) -> None:
                 chat_input="",
                 chat_focused=False,
                 ai_pending=False,
-                model_name="Physics coach",
+                model_name="Local assistant",
                 status_message=(
                     "Simulation stopped after collision."
                     if assessment.collision
                     else "Agent Drive is managing the simulated car."
                 ),
-                voice_enabled=False,
+                voice_enabled=True,
                 selected_tab="Drive",
                 agent_drive=True,
                 live_guidance=guidance_for(assessment, agent),
@@ -138,20 +150,19 @@ def make_video(output: Path, *, seed: int, duration_s: int, fps: int) -> None:
             )
             encoder.stdin.write(pygame.image.tostring(surface, "RGB"))
             frames_written += 1
-    except BrokenPipeError as error:
-        message = encoder.stderr.read().decode("utf-8", errors="replace") if encoder.stderr else ""
-        encoder.wait()
-        raise RuntimeError(f"FFmpeg stopped before the video was complete. {message}") from error
-    finally:
         if encoder.stdin and not encoder.stdin.closed:
             encoder.stdin.close()
-
-    error_text = encoder.stderr.read().decode("utf-8", errors="replace") if encoder.stderr else ""
-    return_code = encoder.wait()
-    pygame.quit()
-    if return_code:
-        raise RuntimeError(f"FFmpeg could not create the video. {error_text}")
-    print(f"Rendered {frames_written} frames ({frames_written / fps:.1f} s) to {output}")
+        error_text = encoder.stderr.read().decode("utf-8", errors="replace") if encoder.stderr else ""
+        return_code = encoder.wait()
+        if return_code:
+            raise RuntimeError(f"FFmpeg could not create the video. {error_text}")
+        print(f"Rendered {frames_written} frames ({frames_written / fps:.1f} s) to {output}")
+    except BrokenPipeError as error:
+        error_text = encoder.stderr.read().decode("utf-8", errors="replace") if encoder.stderr else ""
+        encoder.wait()
+        raise RuntimeError(f"FFmpeg stopped before the video was complete. {error_text}") from error
+    finally:
+        pygame.quit()
 
 
 def main() -> None:
@@ -159,6 +170,12 @@ def main() -> None:
     parser.add_argument("--seed", type=int, default=2026, help="Deterministic simulation seed")
     parser.add_argument("--duration", type=int, default=DEFAULT_DURATION_S, help="Video length in seconds")
     parser.add_argument("--fps", type=int, default=FPS, help="Frames per second")
+    parser.add_argument(
+        "--voiceover",
+        type=Path,
+        required=True,
+        help="WAV narration created by scripts/synthesize_showcase_voice.ps1",
+    )
     parser.add_argument(
         "--output",
         type=Path,
@@ -171,7 +188,7 @@ def main() -> None:
     args = parser.parse_args()
     if args.duration < 1 or args.fps < 1:
         parser.error("--duration and --fps must be positive integers")
-    make_video(args.output, seed=args.seed, duration_s=args.duration, fps=args.fps)
+    make_video(args.output, voiceover=args.voiceover, seed=args.seed, duration_s=args.duration, fps=args.fps)
 
 
 if __name__ == "__main__":

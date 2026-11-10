@@ -13,7 +13,7 @@ The images below are rendered from the project’s Pygame dashboard and determin
 
 ## Simulation video
 
-[Watch the 18-second Agent Drive simulation demo](assets/videos/ravan-ai-simulation-demo.mp4). The clip is rendered from the project's deterministic traffic simulation and Pygame dashboard. Recreate it with `python scripts/render_showcase_video.py` (FFmpeg must be installed and available on `PATH`).
+[Watch the 18-second Agent Drive simulation demo with spoken assistant narration](assets/videos/ravan-ai-simulation-demo.mp4). The clip is rendered from the project's deterministic traffic simulation and Pygame dashboard. Recreate it in PowerShell with `.\scripts\render_showcase_video.ps1`; FFmpeg must be available on `PATH`, and the voice script prefers an installed en-IN voice.
 
 ## Run
 
