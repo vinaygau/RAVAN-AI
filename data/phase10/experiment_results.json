@@ -1,0 +1,701 @@
+{
+  "phase": 10,
+  "project_phase_completion_matrix": [
+    {
+      "phase": 1,
+      "deliverable": "Scenario specification, parameter envelope, acceptance cases",
+      "evidence": [
+        "phase1/scenario_spec.md",
+        "config/phase1.json",
+        "tests/phase1_cases.csv"
+      ],
+      "status": "complete"
+    },
+    {
+      "phase": 2,
+      "deliverable": "Synthetic generator, episode dataset, metadata, quality report",
+      "evidence": [
+        "scripts/generate_phase2.py",
+        "data/phase2/trajectories.csv",
+        "data/phase2/metadata.json",
+        "data/phase2/quality_report.md"
+      ],
+      "status": "complete; 140 episodes and 11,524 samples; synthetic-only"
+    },
+    {
+      "phase": 3,
+      "deliverable": "Preprocessing, feature dictionary, hand-calculated checks",
+      "evidence": [
+        "scripts/preprocess_phase3.py",
+        "data/phase3/trajectories_features.csv",
+        "data/phase3/feature_dictionary.md",
+        "tests/test_phase3_features.py"
+      ],
+      "status": "complete; 5 unit tests passed"
+    },
+    {
+      "phase": 4,
+      "deliverable": "Versioned target protocol, labels and audit",
+      "evidence": [
+        "phase4/labeling_protocol.md",
+        "scripts/label_phase4.py",
+        "data/phase4/trajectories_labeled.csv",
+        "data/phase4/label_audit.md",
+        "tests/test_phase4_labeling.py"
+      ],
+      "status": "complete; 6 unit tests passed; surrogate labels"
+    },
+    {
+      "phase": 5,
+      "deliverable": "Physics baseline, rule traces and evaluation",
+      "evidence": [
+        "phase5/physics_baseline_protocol.md",
+        "scripts/physics_baseline_phase5.py",
+        "data/phase5/physics_baseline.csv",
+        "tests/test_phase5_baseline.py"
+      ],
+      "status": "complete; 5 unit tests passed"
+    },
+    {
+      "phase": 6,
+      "deliverable": "Grouped model comparison and held-out evaluation",
+      "evidence": [
+        "scripts/train_phase6.py",
+        "data/phase6/selected_model.joblib",
+        "data/phase6/test_metrics.json",
+        "data/phase6/robustness_metrics.json"
+      ],
+      "status": "complete; small synthetic holdouts"
+    },
+    {
+      "phase": 7,
+      "deliverable": "Decision policy, calibrated thresholds and traces",
+      "evidence": [
+        "phase7/decision_policy.md",
+        "scripts/decision_engine_phase7.py",
+        "data/phase7/decision_trace.csv",
+        "tests/test_phase7_policy.py"
+      ],
+      "status": "complete; 7 policy tests passed; advisory only"
+    },
+    {
+      "phase": 8,
+      "deliverable": "Faithful model explanation and examples",
+      "evidence": [
+        "phase8/explainability_protocol.md",
+        "scripts/explain_phase8.py",
+        "data/phase8/explanation_examples.md",
+        "data/phase8/explanation_summary.json",
+        "tests/test_phase8_explanations.py"
+      ],
+      "status": "complete; exact logistic decomposition instead of SHAP; 2 checks passed"
+    },
+    {
+      "phase": 9,
+      "deliverable": "Held-out trajectory dashboard and integration checks",
+      "evidence": [
+        "dashboard/index.html",
+        "scripts/build_phase9_dashboard.py",
+        "data/phase9/dashboard_data.js",
+        "tests/test_phase9_integration.py"
+      ],
+      "status": "complete; 4 integration checks and JS syntax passed; browser visual review stopped by Escape"
+    },
+    {
+      "phase": 10,
+      "deliverable": "Evaluation report, ablations, limitations and conclusions",
+      "evidence": [
+        "config/phase10.json",
+        "scripts/run_phase10.py",
+        "data/phase10/experiment_results.json",
+        "data/phase10/evaluation_report.md"
+      ],
+      "status": "complete; ablations exploratory on previously examined holdout"
+    }
+  ],
+  "dataset": {
+    "episodes": 140,
+    "samples": 11524,
+    "source": "synthetic one-dimensional Phase 2 trajectories"
+  },
+  "primary_test_split": {
+    "train_and_validation_episodes": 119,
+    "test_episodes": 21,
+    "test_episode_ids": [
+      "P2-0002",
+      "P2-0006",
+      "P2-0016",
+      "P2-0027",
+      "P2-0033",
+      "P2-0035",
+      "P2-0046",
+      "P2-0052",
+      "P2-0056",
+      "P2-0076",
+      "P2-0078",
+      "P2-0080",
+      "P2-0082",
+      "P2-0084",
+      "P2-0093",
+      "P2-0109",
+      "P2-0119",
+      "P2-0120",
+      "P2-0123",
+      "P2-0134",
+      "P2-0135"
+    ],
+    "test_eligible_rows": 1279,
+    "split_manifest": "data/phase6/split_manifest.json"
+  },
+  "E1_physics_vs_ml_same_test": {
+    "selected_ml": {
+      "sample_count": 1279,
+      "positive_count": 269,
+      "positive_prevalence": 0.21032056293979673,
+      "threshold": 0.5,
+      "confusion_matrix": {
+        "tn": 1009,
+        "fp": 1,
+        "fn": 13,
+        "tp": 256
+      },
+      "accuracy": 0.9890539483971853,
+      "precision": 0.9961089494163424,
+      "recall": 0.9516728624535316,
+      "f1": 0.973384030418251,
+      "average_precision_pr_auc": 0.971538494165339,
+      "brier_score": 0.017443122311768373,
+      "false_positive_rate": 0.0009900990099009901,
+      "episode_event_metrics": {
+        "positive_episodes": 8,
+        "detected_positive_episodes": 8,
+        "event_level_recall": 1.0,
+        "negative_episodes": 13,
+        "negative_episodes_with_any_alarm": 0,
+        "negative_episode_alarm_rate": 0.0
+      }
+    },
+    "physics_rule": {
+      "sample_count": 1279,
+      "positive_count": 269,
+      "positive_prevalence": 0.21032056293979673,
+      "threshold": 0.5,
+      "confusion_matrix": {
+        "tn": 1010,
+        "fp": 0,
+        "fn": 60,
+        "tp": 209
+      },
+      "accuracy": 0.9530883502736512,
+      "precision": 1.0,
+      "recall": 0.7769516728624535,
+      "f1": 0.8744769874476988,
+      "average_precision_pr_auc": 0.8238633225888022,
+      "brier_score": 0.04691164972634871,
+      "false_positive_rate": 0.0,
+      "episode_event_metrics": {
+        "positive_episodes": 8,
+        "detected_positive_episodes": 8,
+        "event_level_recall": 1.0,
+        "negative_episodes": 13,
+        "negative_episodes_with_any_alarm": 0,
+        "negative_episode_alarm_rate": 0.0
+      }
+    }
+  },
+  "E2_feature_ablation": [
+    {
+      "name": "basic_state",
+      "features": [
+        "ego_speed_mps",
+        "lead_speed_mps",
+        "ego_acceleration_mps2",
+        "lead_acceleration_mps2",
+        "gap_m",
+        "relative_speed_mps"
+      ],
+      "metrics": {
+        "samples": 1279,
+        "positive_samples": 269,
+        "prevalence": 0.21032056293979673,
+        "confusion_matrix": {
+          "tn": 1010,
+          "fp": 0,
+          "fn": 19,
+          "tp": 250
+        },
+        "precision": 1.0,
+        "recall": 0.929368029739777,
+        "f1": 0.9633911368015414,
+        "pr_auc_average_precision": 0.970718920771332,
+        "false_positive_rate": 0.0,
+        "event_level_recall": 1.0,
+        "positive_episodes": 8,
+        "detected_positive_episodes": 8
+      }
+    },
+    {
+      "name": "safety_indicators",
+      "features": [
+        "ego_speed_mps",
+        "lead_speed_mps",
+        "ego_acceleration_mps2",
+        "lead_acceleration_mps2",
+        "gap_m",
+        "relative_speed_mps",
+        "ttc_s",
+        "ttc_valid",
+        "thw_s",
+        "thw_valid",
+        "drac_mps2",
+        "drac_valid"
+      ],
+      "metrics": {
+        "samples": 1279,
+        "positive_samples": 269,
+        "prevalence": 0.21032056293979673,
+        "confusion_matrix": {
+          "tn": 1009,
+          "fp": 1,
+          "fn": 13,
+          "tp": 256
+        },
+        "precision": 0.9961089494163424,
+        "recall": 0.9516728624535316,
+        "f1": 0.973384030418251,
+        "pr_auc_average_precision": 0.971538494165339,
+        "false_positive_rate": 0.0009900990099009901,
+        "event_level_recall": 1.0,
+        "positive_episodes": 8,
+        "detected_positive_episodes": 8
+      }
+    }
+  ],
+  "E3_temporal_history_ablation": [
+    {
+      "name": "snapshot_only",
+      "features": [
+        "ego_speed_mps",
+        "lead_speed_mps",
+        "ego_acceleration_mps2",
+        "lead_acceleration_mps2",
+        "gap_m",
+        "relative_speed_mps",
+        "ttc_s",
+        "ttc_valid",
+        "thw_s",
+        "thw_valid",
+        "drac_mps2",
+        "drac_valid"
+      ],
+      "metrics": {
+        "samples": 1279,
+        "positive_samples": 269,
+        "prevalence": 0.21032056293979673,
+        "confusion_matrix": {
+          "tn": 1009,
+          "fp": 1,
+          "fn": 13,
+          "tp": 256
+        },
+        "precision": 0.9961089494163424,
+        "recall": 0.9516728624535316,
+        "f1": 0.973384030418251,
+        "pr_auc_average_precision": 0.971538494165339,
+        "false_positive_rate": 0.0009900990099009901,
+        "event_level_recall": 1.0,
+        "positive_episodes": 8,
+        "detected_positive_episodes": 8
+      }
+    },
+    {
+      "name": "snapshot_plus_past_1s",
+      "features": [
+        "ego_speed_mps",
+        "lead_speed_mps",
+        "ego_acceleration_mps2",
+        "lead_acceleration_mps2",
+        "gap_m",
+        "relative_speed_mps",
+        "ttc_s",
+        "ttc_valid",
+        "thw_s",
+        "thw_valid",
+        "drac_mps2",
+        "drac_valid",
+        "ego_speed_1s_ago_mps",
+        "lead_speed_1s_ago_mps",
+        "gap_1s_ago_m",
+        "relative_speed_1s_ago_mps",
+        "ego_acceleration_1s_ago_mps2",
+        "lead_acceleration_1s_ago_mps2",
+        "gap_change_over_1s_m",
+        "ego_speed_change_over_1s_mps"
+      ],
+      "metrics": {
+        "samples": 1279,
+        "positive_samples": 269,
+        "prevalence": 0.21032056293979673,
+        "confusion_matrix": {
+          "tn": 1009,
+          "fp": 1,
+          "fn": 12,
+          "tp": 257
+        },
+        "precision": 0.9961240310077519,
+        "recall": 0.9553903345724907,
+        "f1": 0.9753320683111955,
+        "pr_auc_average_precision": 0.9717828249553445,
+        "false_positive_rate": 0.0009900990099009901,
+        "event_level_recall": 1.0,
+        "positive_episodes": 8,
+        "detected_positive_episodes": 8
+      }
+    }
+  ],
+  "E4_parameter_held_out": {
+    "held_out_parameter_range": "absolute lead deceleration >= 5.0 m/s^2",
+    "held_out_episode_count": 14,
+    "held_out_eligible_rows": 897,
+    "held_out_episode_ids": [
+      "P2-0049",
+      "P2-0051",
+      "P2-0052",
+      "P2-0064",
+      "P2-0071",
+      "P2-0072",
+      "P2-0073",
+      "P2-0124",
+      "P2-0125",
+      "P2-0126",
+      "P2-0128",
+      "P2-0131",
+      "P2-0133",
+      "P2-0140"
+    ],
+    "no_held_out_episodes_used_for_fit_or_validation": true,
+    "candidate_validation_metrics_on_other_parameter_ranges": {
+      "DummyPrior": {
+        "sample_count": 1317,
+        "positive_count": 310,
+        "positive_prevalence": 0.23538344722854973,
+        "threshold": 0.5,
+        "confusion_matrix": {
+          "tn": 1007,
+          "fp": 0,
+          "fn": 310,
+          "tp": 0
+        },
+        "accuracy": 0.7646165527714502,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "average_precision_pr_auc": 0.23538344722854973,
+        "brier_score": 0.1799794345318945,
+        "false_positive_rate": 0.0
+      },
+      "LogisticRegression": {
+        "sample_count": 1317,
+        "positive_count": 310,
+        "positive_prevalence": 0.23538344722854973,
+        "threshold": 0.5,
+        "confusion_matrix": {
+          "tn": 897,
+          "fp": 110,
+          "fn": 27,
+          "tp": 283
+        },
+        "accuracy": 0.8959757023538345,
+        "precision": 0.7201017811704835,
+        "recall": 0.9129032258064517,
+        "f1": 0.8051209103840683,
+        "average_precision_pr_auc": 0.9415484255258939,
+        "brier_score": 0.06859491849786266,
+        "false_positive_rate": 0.10923535253227408
+      },
+      "DecisionTree": {
+        "sample_count": 1317,
+        "positive_count": 310,
+        "positive_prevalence": 0.23538344722854973,
+        "threshold": 0.5,
+        "confusion_matrix": {
+          "tn": 923,
+          "fp": 84,
+          "fn": 37,
+          "tp": 273
+        },
+        "accuracy": 0.9081245254365984,
+        "precision": 0.7647058823529411,
+        "recall": 0.8806451612903226,
+        "f1": 0.8185907046476761,
+        "average_precision_pr_auc": 0.7315961112275268,
+        "brier_score": 0.08452329365534997,
+        "false_positive_rate": 0.08341608738828203
+      },
+      "RandomForest": {
+        "sample_count": 1317,
+        "positive_count": 310,
+        "positive_prevalence": 0.23538344722854973,
+        "threshold": 0.5,
+        "confusion_matrix": {
+          "tn": 948,
+          "fp": 59,
+          "fn": 41,
+          "tp": 269
+        },
+        "accuracy": 0.9240698557327259,
+        "precision": 0.8201219512195121,
+        "recall": 0.867741935483871,
+        "f1": 0.8432601880877743,
+        "average_precision_pr_auc": 0.9568199089645455,
+        "brier_score": 0.04855628013757861,
+        "false_positive_rate": 0.05858987090367428
+      }
+    },
+    "selected_model": "RandomForest",
+    "fit_episode_count": 126,
+    "test_metrics": {
+      "sample_count": 897,
+      "positive_count": 205,
+      "positive_prevalence": 0.22853957636566333,
+      "threshold": 0.5,
+      "confusion_matrix": {
+        "tn": 685,
+        "fp": 7,
+        "fn": 18,
+        "tp": 187
+      },
+      "accuracy": 0.9721293199554069,
+      "precision": 0.9639175257731959,
+      "recall": 0.9121951219512195,
+      "f1": 0.9373433583959899,
+      "average_precision_pr_auc": 0.9322620115833264,
+      "brier_score": 0.02499628889099678,
+      "false_positive_rate": 0.010115606936416185,
+      "episode_event_metrics": {
+        "positive_episodes": 5,
+        "detected_positive_episodes": 5,
+        "event_level_recall": 1.0,
+        "negative_episodes": 9,
+        "negative_episodes_with_any_alarm": 1,
+        "negative_episode_alarm_rate": 0.1111111111111111
+      }
+    },
+    "limitations": "Small synthetic parameter-held-out subset; not a real-world generalization test.",
+    "package_versions": {
+      "python": "3.12.10",
+      "numpy": "1.26.4",
+      "scikit_learn": "1.9.1",
+      "joblib": "1.4.2"
+    }
+  },
+  "E5_observation_robustness": {
+    "clean": {
+      "samples": 1279,
+      "positive_samples": 269,
+      "prevalence": 0.21032056293979673,
+      "confusion_matrix": {
+        "tn": 1009,
+        "fp": 1,
+        "fn": 13,
+        "tp": 256
+      },
+      "precision": 0.9961089494163424,
+      "recall": 0.9516728624535316,
+      "f1": 0.973384030418251,
+      "pr_auc_average_precision": 0.971538494165339,
+      "false_positive_rate": 0.0009900990099009901,
+      "event_level_recall": 1.0,
+      "positive_episodes": 8,
+      "detected_positive_episodes": 8
+    },
+    "noisy_positions_and_speeds": {
+      "samples": 1279,
+      "positive_samples": 269,
+      "prevalence": 0.21032056293979673,
+      "confusion_matrix": {
+        "tn": 874,
+        "fp": 136,
+        "fn": 10,
+        "tp": 259
+      },
+      "precision": 0.6556962025316456,
+      "recall": 0.9628252788104089,
+      "f1": 0.7801204819277109,
+      "pr_auc_average_precision": 0.7089766091194213,
+      "false_positive_rate": 0.13465346534653466,
+      "event_level_recall": 1.0,
+      "positive_episodes": 8,
+      "detected_positive_episodes": 8
+    },
+    "random_feature_missingness": {
+      "samples": 1279,
+      "positive_samples": 269,
+      "prevalence": 0.21032056293979673,
+      "confusion_matrix": {
+        "tn": 1008,
+        "fp": 2,
+        "fn": 17,
+        "tp": 252
+      },
+      "precision": 0.9921259842519685,
+      "recall": 0.9368029739776952,
+      "f1": 0.9636711281070746,
+      "pr_auc_average_precision": 0.9699854417009052,
+      "false_positive_rate": 0.0019801980198019802,
+      "event_level_recall": 1.0,
+      "positive_episodes": 8,
+      "detected_positive_episodes": 8
+    },
+    "noise_settings": {
+      "position_sigma_m": 0.25,
+      "speed_sigma_mps": 0.5,
+      "missingness_rate": 0.05,
+      "seed": 20261110
+    },
+    "missing_feature_cell_rate_realized": 0.17311701850403963,
+    "labels_kept_from_clean_trajectory": true,
+    "model_fit_on_clean_trainval_only": true
+  },
+  "E6_decision_layer_review": {
+    "integrated_action_counts_all_test_samples": {
+      "caution": 2,
+      "critical_warning": 103,
+      "increase_following_gap": 458,
+      "monitor": 947,
+      "prepare_to_slow": 167
+    },
+    "physics_only_action_counts_all_test_samples": {
+      "critical_warning": 103,
+      "increase_following_gap": 523,
+      "monitor": 984,
+      "prepare_to_slow": 67
+    },
+    "integrated_action_positive_fraction_on_eligible_samples": {
+      "caution": {
+        "positive": 0,
+        "eligible": 2,
+        "fraction": 0.0
+      },
+      "critical_warning": {
+        "positive": 95,
+        "eligible": 95,
+        "fraction": 1.0
+      },
+      "increase_following_gap": {
+        "positive": 0,
+        "eligible": 338,
+        "fraction": 0.0
+      },
+      "monitor": {
+        "positive": 11,
+        "eligible": 677,
+        "fraction": 0.01624815361890694
+      },
+      "prepare_to_slow": {
+        "positive": 163,
+        "eligible": 167,
+        "fraction": 0.9760479041916168
+      }
+    },
+    "model_physics_disagreement_counts": {
+      "agreement_or_partial": 1447,
+      "model_high_physics_low": 230
+    },
+    "recommendation_relevance_validated_by_humans": false
+  },
+  "E7_label_sensitivity": [
+    {
+      "horizon_s": 2.0,
+      "future_ttc_threshold_s": 2.0,
+      "eligible_samples": 9693,
+      "positive_samples": 1582,
+      "censored_samples": 1831,
+      "positive_prevalence": 0.16321056432477046
+    },
+    {
+      "horizon_s": 2.0,
+      "future_ttc_threshold_s": 3.0,
+      "eligible_samples": 9712,
+      "positive_samples": 1819,
+      "censored_samples": 1812,
+      "positive_prevalence": 0.18729406919275124
+    },
+    {
+      "horizon_s": 2.0,
+      "future_ttc_threshold_s": 4.0,
+      "eligible_samples": 9721,
+      "positive_samples": 2017,
+      "censored_samples": 1803,
+      "positive_prevalence": 0.20748894146692728
+    },
+    {
+      "horizon_s": 3.0,
+      "future_ttc_threshold_s": 2.0,
+      "eligible_samples": 8803,
+      "positive_samples": 1864,
+      "censored_samples": 2721,
+      "positive_prevalence": 0.21174599568328978
+    },
+    {
+      "horizon_s": 3.0,
+      "future_ttc_threshold_s": 3.0,
+      "eligible_samples": 8832,
+      "positive_samples": 2051,
+      "censored_samples": 2692,
+      "positive_prevalence": 0.23222373188405798
+    },
+    {
+      "horizon_s": 3.0,
+      "future_ttc_threshold_s": 4.0,
+      "eligible_samples": 8853,
+      "positive_samples": 2245,
+      "censored_samples": 2671,
+      "positive_prevalence": 0.2535863549079408
+    },
+    {
+      "horizon_s": 4.0,
+      "future_ttc_threshold_s": 2.0,
+      "eligible_samples": 7913,
+      "positive_samples": 2086,
+      "censored_samples": 3611,
+      "positive_prevalence": 0.2636168330595223
+    },
+    {
+      "horizon_s": 4.0,
+      "future_ttc_threshold_s": 3.0,
+      "eligible_samples": 7952,
+      "positive_samples": 2256,
+      "censored_samples": 3572,
+      "positive_prevalence": 0.2837022132796781
+    },
+    {
+      "horizon_s": 4.0,
+      "future_ttc_threshold_s": 4.0,
+      "eligible_samples": 7993,
+      "positive_samples": 2453,
+      "censored_samples": 3531,
+      "positive_prevalence": 0.30689353184036033
+    }
+  ],
+  "E8_explanation_fidelity": {
+    "maximum_reconstruction_error": 4.440892098500626e-16,
+    "maximum_difference_from_phase6_test_predictions": 4.997566804831877e-10,
+    "maximum_difference_from_phase7_trace": 4.997566804831877e-10,
+    "configured_tolerance": 1e-09
+  },
+  "interpretation": "Phase 10 ablations are exploratory and reuse the Phase 6 held-out episodes after the primary result was examined. They do not support confirmatory claims.",
+  "package_versions": {
+    "python": "3.12.10",
+    "numpy": "1.26.4",
+    "scikit_learn": "1.9.1"
+  },
+  "limits": [
+    "Synthetic, one-dimensional, same-lane kinematics; no CARLA or real-world data.",
+    "The target is defined from future TTC/contact and current TTC-derived features are model inputs; high scores mainly show learnability of the operational label rule.",
+    "Frames within an episode are correlated; test contains only 21 episodes and no confidence intervals were estimated.",
+    "The strong-braking holdout has only 14 episodes. Noise and missingness are illustrative perturbations, not sensor models.",
+    "Recommendation relevance has not been evaluated by drivers or domain experts; no actuation or safety effectiveness is demonstrated.",
+    "Exact additive Phase 8 explanations are model-relative, not causal."
+  ]
+}

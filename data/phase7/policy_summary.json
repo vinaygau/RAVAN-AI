@@ -1,0 +1,32 @@
+{
+  "sample_count": 11524,
+  "action_counts": {
+    "caution": 77,
+    "critical_warning": 731,
+    "increase_following_gap": 2307,
+    "monitor": 6661,
+    "prepare_to_slow": 1748
+  },
+  "reason_counts": {
+    "CURRENT_CONTACT": 47,
+    "MODEL_SCORE_CAUTION_THRESHOLD": 77,
+    "MODEL_SCORE_PREPARE_THRESHOLD": 1230,
+    "NO_ACTION_THRESHOLD_MET": 6661,
+    "PHYSICS_THW_SHORT": 2305,
+    "PHYSICS_TTC_CRITICAL": 684,
+    "PHYSICS_TTC_HIGH": 518,
+    "PHYSICS_TTC_MODERATE": 2
+  },
+  "disagreement_counts": {
+    "agreement_or_partial": 9567,
+    "model_high_physics_low": 1957
+  },
+  "data_quality_counts": {
+    "complete": 11524
+  },
+  "thresholds": {
+    "caution": 0.1887004484353369,
+    "prepare_to_slow": 0.39806028059909504
+  },
+  "recommendations_are_advisory_only": true
+}

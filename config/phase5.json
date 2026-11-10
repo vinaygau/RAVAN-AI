@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "phase": 5,
+  "input": "data/phase4/trajectories_labeled.csv",
+  "output": "data/phase5/physics_baseline.csv",
+  "future_horizon_s": 3.0,
+  "primary_target": "future_conflict_within_3s",
+  "primary_rule": "Under constant relative speed, predict future TTC <= 3 s within 3 s when current valid TTC <= 6 s (target threshold + horizon).",
+  "secondary_target": "future_contact_within_3s",
+  "secondary_rule": "Under constant relative speed, predict contact within 3 s when current valid TTC <= 3 s.",
+  "undefined_ttc_prediction": 0,
+  "current_contact_prediction": null,
+  "limitations": "The rules assume current relative speed persists and ignore acceleration, changing gaps, and other traffic. TTC cutoffs are provisional surrogate criteria."
+}

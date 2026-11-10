@@ -1,0 +1,24 @@
+{
+  "schema_version": "2.0",
+  "phase": 2,
+  "dataset_name": "synthetic_contact_prediction_v2",
+  "episode_id_prefix": "V2",
+  "base_seed": 20261110,
+  "episodes_per_scenario": 100,
+  "time_step_s": 0.1,
+  "continuous_contact_interpolation": true,
+  "duration_s": [8.0, 12.0],
+  "parameter_ranges": {
+    "ego_initial_speed_mps": [10.0, 30.0],
+    "lead_initial_speed_mps": [5.0, 28.0],
+    "initial_gap_m": [10.0, 60.0],
+    "lead_length_m": [4.0, 5.0],
+    "lead_brake_onset_s": [2.0, 6.0],
+    "lead_deceleration_magnitude_mps2": [2.0, 6.0],
+    "ego_reaction_delay_s": [0.0, 1.5],
+    "ego_braking_magnitude_mps2": [2.0, 6.0]
+  },
+  "scenario_families": ["S1", "S2", "S3", "S4", "S5", "S6", "S7"],
+  "contact_handling": "Interpolate contact within the final time step, record a zero bumper gap at contact, and end the episode; post-contact motion is not simulated.",
+  "labeling": "Primary ML target is simulated contact within the next 3 seconds; TTC threshold events are not the primary target."
+}

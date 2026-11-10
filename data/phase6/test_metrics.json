@@ -1,0 +1,103 @@
+{
+  "selected_model": "LogisticRegression",
+  "test_metrics": {
+    "sample_count": 1279,
+    "positive_count": 269,
+    "positive_prevalence": 0.21032056293979673,
+    "threshold": 0.5,
+    "confusion_matrix": {
+      "tn": 1009,
+      "fp": 1,
+      "fn": 13,
+      "tp": 256
+    },
+    "accuracy": 0.9890539483971853,
+    "precision": 0.9961089494163424,
+    "recall": 0.9516728624535316,
+    "f1": 0.973384030418251,
+    "average_precision_pr_auc": 0.971538494165339,
+    "brier_score": 0.017443122311768373,
+    "false_positive_rate": 0.0009900990099009901,
+    "episode_event_metrics": {
+      "positive_episodes": 8,
+      "detected_positive_episodes": 8,
+      "event_level_recall": 1.0,
+      "negative_episodes": 13,
+      "negative_episodes_with_any_alarm": 0,
+      "negative_episode_alarm_rate": 0.0
+    }
+  },
+  "physics_baseline_on_same_test_episodes": {
+    "same_test_episodes_as_selected_model": true,
+    "primary_future_conflict": {
+      "sample_count": 1279,
+      "positive_count": 269,
+      "positive_prevalence": 0.21032056293979673,
+      "threshold": 0.5,
+      "confusion_matrix": {
+        "tn": 1010,
+        "fp": 0,
+        "fn": 60,
+        "tp": 209
+      },
+      "accuracy": 0.9530883502736512,
+      "precision": 1.0,
+      "recall": 0.7769516728624535,
+      "f1": 0.8744769874476988,
+      "average_precision_pr_auc": 0.8238633225888022,
+      "brier_score": 0.04691164972634871,
+      "false_positive_rate": 0.0,
+      "episode_event_metrics": {
+        "positive_episodes": 8,
+        "detected_positive_episodes": 8,
+        "event_level_recall": 1.0,
+        "negative_episodes": 13,
+        "negative_episodes_with_any_alarm": 0,
+        "negative_episode_alarm_rate": 0.0
+      }
+    },
+    "secondary_future_contact": {
+      "sample_count": 1250,
+      "positive_count": 165,
+      "positive_prevalence": 0.132,
+      "threshold": 0.5,
+      "confusion_matrix": {
+        "tn": 1085,
+        "fp": 0,
+        "fn": 15,
+        "tp": 150
+      },
+      "accuracy": 0.988,
+      "precision": 1.0,
+      "recall": 0.9090909090909091,
+      "f1": 0.9523809523809523,
+      "average_precision_pr_auc": 0.9210909090909091,
+      "brier_score": 0.012,
+      "false_positive_rate": 0.0
+    }
+  },
+  "threshold": 0.5,
+  "final_fit_rows": 7553,
+  "test_rows_evaluated_once": 1279,
+  "features": [
+    "ego_speed_mps",
+    "lead_speed_mps",
+    "ego_acceleration_mps2",
+    "lead_acceleration_mps2",
+    "gap_m",
+    "relative_speed_mps",
+    "ttc_s",
+    "ttc_valid",
+    "thw_s",
+    "thw_valid",
+    "drac_mps2",
+    "drac_valid"
+  ],
+  "package_versions": {
+    "python": "3.12.10",
+    "numpy": "1.26.4",
+    "scikit_learn": "1.9.1",
+    "joblib": "1.4.2"
+  },
+  "limitations": "Synthetic one-dimensional trajectories; labels are provisional TTC/contact surrogate events; frame-level metrics are correlated within episodes."
+}

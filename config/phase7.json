@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "phase": 7,
+  "model_artifact": "data/phase6/selected_model.joblib",
+  "input": "data/phase4/trajectories_labeled.csv",
+  "output": "data/phase7/decision_trace.csv",
+  "threshold_calibration": {
+    "source": "phase6 validation episodes scored by a model fitted on phase6 training episodes only",
+    "caution_fbeta": 2.0,
+    "prepare_to_slow_fbeta": 0.5
+  },
+  "physics_policy": {
+    "critical_ttc_s": 1.5,
+    "high_risk_ttc_s": 3.0,
+    "moderate_risk_ttc_s": 5.0,
+    "short_time_headway_s": 2.0
+  },
+  "actions": ["monitor", "caution", "increase_following_gap", "prepare_to_slow", "critical_warning"],
+  "limitations": "This is a transparent decision-support policy over synthetic same-lane data. It does not actuate vehicle controls; thresholds are provisional and do not establish safety."
+}

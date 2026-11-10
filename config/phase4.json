@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0",
+  "phase": 4,
+  "input": "data/phase3/trajectories_features.csv",
+  "output": "data/phase4/trajectories_labeled.csv",
+  "future_horizon_s": 3.0,
+  "primary_target": "future_conflict_within_3s",
+  "primary_event_rule": "At least one later sample in (t, t + 3 s] has TTC <= 3 s while TTC is valid, or sampled contact occurs in that window.",
+  "secondary_target": "future_contact_within_3s",
+  "current_risk_bands": {
+    "low": "TTC undefined or TTC > 5 s, except current contact",
+    "moderate": "3 s < TTC <= 5 s",
+    "high": "1.5 s < TTC <= 3 s",
+    "critical": "TTC <= 1.5 s or current contact"
+  },
+  "censoring_policy": "If the full future horizon is not observed and no positive event is observed in the window, mark the target ineligible and leave it blank.",
+  "limitations": "TTC thresholds are provisional surrogate-conflict criteria. The primary target is not a real-world collision probability; the secondary contact target is a severe outcome in this synthetic simulator."
+}

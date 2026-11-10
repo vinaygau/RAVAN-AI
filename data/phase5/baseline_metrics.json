@@ -1,0 +1,53 @@
+{
+  "baseline_version": "phase5.1",
+  "sample_count": 11524,
+  "rule_prediction_inputs": [
+    "current gap",
+    "current relative speed",
+    "current TTC validity",
+    "current contact"
+  ],
+  "future_targets_used_to_generate_predictions": false,
+  "primary_future_conflict_metrics": {
+    "eligible_samples": 8832,
+    "confusion_matrix": {
+      "tp": 1747,
+      "fp": 42,
+      "fn": 304,
+      "tn": 6739
+    },
+    "precision": 0.9765231973169368,
+    "recall": 0.8517796196977084,
+    "f1": 0.9098958333333333,
+    "false_positive_rate": 0.006193776729096004
+  },
+  "secondary_future_contact_metrics": {
+    "eligible_samples": 8687,
+    "confusion_matrix": {
+      "tp": 1132,
+      "fp": 2,
+      "fn": 111,
+      "tn": 7442
+    },
+    "precision": 0.9982363315696648,
+    "recall": 0.910699919549477,
+    "f1": 0.9524610854017669,
+    "false_positive_rate": 0.00026867275658248256
+  },
+  "reason_code_counts": {
+    "CURRENT_CONTACT": 47,
+    "TTC_GT_5S": 1030,
+    "TTC_LE_1_5S": 684,
+    "TTC_LE_3S": 518,
+    "TTC_LE_5S": 483,
+    "TTC_UNDEFINED_OR_NOT_CLOSING": 8762
+  },
+  "current_category_counts": {
+    "critical": 731,
+    "high": 518,
+    "low": 9792,
+    "moderate": 483
+  },
+  "limitations": "The rules assume current relative speed persists and ignore acceleration, changing gaps, and other traffic. TTC cutoffs are provisional surrogate criteria.",
+  "metric_unit": "frame-level; samples within each episode are correlated"
+}

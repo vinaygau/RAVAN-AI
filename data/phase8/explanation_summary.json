@@ -1,0 +1,333 @@
+{
+  "method": "exact additive logistic-regression decomposition in standardized feature space",
+  "model": "Phase 6 selected logistic regression",
+  "held_out_test_sample_count": 1279,
+  "features": [
+    "ego_speed_mps",
+    "lead_speed_mps",
+    "ego_acceleration_mps2",
+    "lead_acceleration_mps2",
+    "gap_m",
+    "relative_speed_mps",
+    "ttc_s",
+    "ttc_valid",
+    "thw_s",
+    "thw_valid",
+    "drac_mps2",
+    "drac_valid"
+  ],
+  "base_log_odds_intercept": -3.6190216045751282,
+  "probability_fidelity": {
+    "maximum_reconstruction_error": 4.440892098500626e-16,
+    "maximum_difference_from_phase6_test_predictions": 4.997566804831877e-10,
+    "maximum_difference_from_phase7_trace": 4.997566804831877e-10,
+    "configured_tolerance": 1e-09
+  },
+  "global_feature_summary": [
+    {
+      "feature": "thw_s",
+      "coefficient": -6.824191102745456,
+      "mean_absolute_test_contribution_log_odds": 4.797209704028425,
+      "mean_signed_test_contribution_log_odds": -3.3687778303325664
+    },
+    {
+      "feature": "ego_acceleration_mps2",
+      "coefficient": 2.211770794945894,
+      "mean_absolute_test_contribution_log_odds": 1.7317212681829035,
+      "mean_signed_test_contribution_log_odds": 0.14215540646631078
+    },
+    {
+      "feature": "relative_speed_mps",
+      "coefficient": 2.9957881001991495,
+      "mean_absolute_test_contribution_log_odds": 1.7102198960178634,
+      "mean_signed_test_contribution_log_odds": 0.3996991756077931
+    },
+    {
+      "feature": "lead_acceleration_mps2",
+      "coefficient": -1.241183076380514,
+      "mean_absolute_test_contribution_log_odds": 1.0431171152681618,
+      "mean_signed_test_contribution_log_odds": -0.0001689532681144904
+    },
+    {
+      "feature": "gap_m",
+      "coefficient": -1.5425499166170453,
+      "mean_absolute_test_contribution_log_odds": 1.023385079759707,
+      "mean_signed_test_contribution_log_odds": -0.017335023454334374
+    },
+    {
+      "feature": "lead_speed_mps",
+      "coefficient": -1.2445263401892452,
+      "mean_absolute_test_contribution_log_odds": 0.8681368358950815,
+      "mean_signed_test_contribution_log_odds": 0.1874123845543234
+    },
+    {
+      "feature": "thw_valid",
+      "coefficient": 1.1638541145797945,
+      "mean_absolute_test_contribution_log_odds": 0.6233954653609671,
+      "mean_signed_test_contribution_log_odds": 0.041124193281677435
+    },
+    {
+      "feature": "ego_speed_mps",
+      "coefficient": 0.6765042150926276,
+      "mean_absolute_test_contribution_log_odds": 0.4831174339040599,
+      "mean_signed_test_contribution_log_odds": -0.044475106150545174
+    },
+    {
+      "feature": "ttc_valid",
+      "coefficient": 0.23557441571122695,
+      "mean_absolute_test_contribution_log_odds": 0.20512348328688176,
+      "mean_signed_test_contribution_log_odds": -0.029486053349532197
+    },
+    {
+      "feature": "drac_valid",
+      "coefficient": 0.23557441571122695,
+      "mean_absolute_test_contribution_log_odds": 0.20512348328688176,
+      "mean_signed_test_contribution_log_odds": -0.029486053349532197
+    },
+    {
+      "feature": "drac_mps2",
+      "coefficient": 1.590354387192323,
+      "mean_absolute_test_contribution_log_odds": 0.17317218704383563,
+      "mean_signed_test_contribution_log_odds": 0.0023493842884084017
+    },
+    {
+      "feature": "ttc_s",
+      "coefficient": 0.08929370325556289,
+      "mean_absolute_test_contribution_log_odds": 0.05118527468381474,
+      "mean_signed_test_contribution_log_odds": 0.020467066848636188
+    }
+  ],
+  "representative_examples": [
+    {
+      "case_type": "true_positive",
+      "episode_id": "P2-0033",
+      "scenario_id": "S2",
+      "step": "11",
+      "target": 1,
+      "model_probability": 1.0,
+      "phase7_recommendation": "critical_warning",
+      "phase7_disagreement": "agreement_or_partial",
+      "scheduled_lead_brake_onset_s": null,
+      "lead_brake_time_from_sample_s": null,
+      "base_log_odds": -3.6190216045751282,
+      "reconstructed_logit": 43.60711331985138,
+      "top_absolute_contributions": [
+        {
+          "feature": "drac_mps2",
+          "raw_value": "621.707773276",
+          "contribution_log_odds": 28.984849338420055,
+          "direction": "raises score"
+        },
+        {
+          "feature": "relative_speed_mps",
+          "raw_value": "19.445952000",
+          "contribution_log_odds": 10.074049239450915,
+          "direction": "raises score"
+        },
+        {
+          "feature": "gap_m",
+          "raw_value": "0.304118000",
+          "contribution_log_odds": 2.7154896338823535,
+          "direction": "raises score"
+        },
+        {
+          "feature": "thw_s",
+          "raw_value": "0.012228936",
+          "contribution_log_odds": 1.9615639167117118,
+          "direction": "raises score"
+        },
+        {
+          "feature": "lead_speed_mps",
+          "raw_value": "5.422770",
+          "contribution_log_odds": 1.323923378303897,
+          "direction": "raises score"
+        }
+      ]
+    },
+    {
+      "case_type": "true_negative",
+      "episode_id": "P2-0078",
+      "scenario_id": "S4",
+      "step": "66",
+      "target": 0,
+      "model_probability": 0.0,
+      "phase7_recommendation": "monitor",
+      "phase7_disagreement": "agreement_or_partial",
+      "scheduled_lead_brake_onset_s": 3.7100932314107427,
+      "lead_brake_time_from_sample_s": -2.889907,
+      "base_log_odds": -3.6190216045751282,
+      "reconstructed_logit": -25.171613328959438,
+      "top_absolute_contributions": [
+        {
+          "feature": "thw_s",
+          "raw_value": "35.030599698",
+          "contribution_log_odds": -17.453506751023777,
+          "direction": "lowers score"
+        },
+        {
+          "feature": "ego_acceleration_mps2",
+          "raw_value": "-3.818225",
+          "contribution_log_odds": -3.1159585194787485,
+          "direction": "lowers score"
+        },
+        {
+          "feature": "relative_speed_mps",
+          "raw_value": "-1.823597000",
+          "contribution_log_odds": -1.672642614095802,
+          "direction": "lowers score"
+        },
+        {
+          "feature": "lead_speed_mps",
+          "raw_value": "3.102858",
+          "contribution_log_odds": 1.6643423441188743,
+          "direction": "raises score"
+        },
+        {
+          "feature": "ego_speed_mps",
+          "raw_value": "1.279261",
+          "contribution_log_odds": -1.1548163994569676,
+          "direction": "lowers score"
+        }
+      ]
+    },
+    {
+      "case_type": "false_positive",
+      "episode_id": "P2-0056",
+      "scenario_id": "S3",
+      "step": "44",
+      "target": 0,
+      "model_probability": 0.709951484,
+      "phase7_recommendation": "prepare_to_slow",
+      "phase7_disagreement": "model_high_physics_low",
+      "scheduled_lead_brake_onset_s": 4.211861572575566,
+      "lead_brake_time_from_sample_s": -0.188138,
+      "base_log_odds": -3.6190216045751282,
+      "reconstructed_logit": 0.8951484320147478,
+      "top_absolute_contributions": [
+        {
+          "feature": "ttc_s",
+          "raw_value": "165.052741781",
+          "contribution_log_odds": 2.247445212880819,
+          "direction": "raises score"
+        },
+        {
+          "feature": "ego_acceleration_mps2",
+          "raw_value": "0.000000",
+          "contribution_log_odds": 1.1668394678073735,
+          "direction": "raises score"
+        },
+        {
+          "feature": "lead_speed_mps",
+          "raw_value": "22.273942",
+          "contribution_log_odds": -1.1487818557783878,
+          "direction": "lowers score"
+        },
+        {
+          "feature": "lead_acceleration_mps2",
+          "raw_value": "-2.727057",
+          "contribution_log_odds": 1.1074432563814403,
+          "direction": "raises score"
+        },
+        {
+          "feature": "thw_s",
+          "raw_value": "1.996344335",
+          "contribution_log_odds": 0.8615201440776957,
+          "direction": "raises score"
+        }
+      ]
+    },
+    {
+      "case_type": "false_negative",
+      "episode_id": "P2-0052",
+      "scenario_id": "S3",
+      "step": "24",
+      "target": 1,
+      "model_probability": 0.007336165,
+      "phase7_recommendation": "monitor",
+      "phase7_disagreement": "agreement_or_partial",
+      "scheduled_lead_brake_onset_s": 2.953702525696365,
+      "lead_brake_time_from_sample_s": 0.553703,
+      "base_log_odds": -3.6190216045751282,
+      "reconstructed_logit": -4.907575831345992,
+      "top_absolute_contributions": [
+        {
+          "feature": "ego_acceleration_mps2",
+          "raw_value": "0.000000",
+          "contribution_log_odds": 1.1668394678073735,
+          "direction": "raises score"
+        },
+        {
+          "feature": "gap_m",
+          "raw_value": "50.097237000",
+          "contribution_log_odds": -1.0857077390269967,
+          "direction": "lowers score"
+        },
+        {
+          "feature": "lead_acceleration_mps2",
+          "raw_value": "0.000000",
+          "contribution_log_odds": -0.7530264569175493,
+          "direction": "lowers score"
+        },
+        {
+          "feature": "relative_speed_mps",
+          "raw_value": "0.000000000",
+          "contribution_log_odds": -0.6655111500458479,
+          "direction": "lowers score"
+        },
+        {
+          "feature": "lead_speed_mps",
+          "raw_value": "18.886470",
+          "contribution_log_odds": -0.6517114001028305,
+          "direction": "lowers score"
+        }
+      ]
+    },
+    {
+      "case_type": "model_physics_disagreement",
+      "episode_id": "P2-0052",
+      "scenario_id": "S3",
+      "step": "53",
+      "target": 1,
+      "model_probability": 0.999932179,
+      "phase7_recommendation": "prepare_to_slow",
+      "phase7_disagreement": "model_high_physics_low",
+      "scheduled_lead_brake_onset_s": 2.953702525696365,
+      "lead_brake_time_from_sample_s": -2.346297,
+      "base_log_odds": -3.6190216045751282,
+      "reconstructed_logit": 9.598566235351633,
+      "top_absolute_contributions": [
+        {
+          "feature": "relative_speed_mps",
+          "raw_value": "12.027877000",
+          "contribution_log_odds": 5.97721384479828,
+          "direction": "raises score"
+        },
+        {
+          "feature": "lead_acceleration_mps2",
+          "raw_value": "-5.229512",
+          "contribution_log_odds": 2.814683602437142,
+          "direction": "raises score"
+        },
+        {
+          "feature": "ego_acceleration_mps2",
+          "raw_value": "0.000000",
+          "contribution_log_odds": 1.1668394678073735,
+          "direction": "raises score"
+        },
+        {
+          "feature": "lead_speed_mps",
+          "raw_value": "6.858593",
+          "contribution_log_odds": 1.1132337569935378,
+          "direction": "raises score"
+        },
+        {
+          "feature": "thw_s",
+          "raw_value": "1.920167083",
+          "contribution_log_odds": 0.9037547397676476,
+          "direction": "raises score"
+        }
+      ]
+    }
+  ],
+  "limitations": "Correlated TTC-derived features share explanatory signal. Contributions are model-relative, not causal, and are specific to synthetic labels and data."
+}

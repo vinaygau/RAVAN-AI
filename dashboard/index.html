@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Review Ravan AI held-out synthetic driving scenarios from trajectory through prediction, recommendation, and model explanation.">
+  <title>Ravan AI | Trajectory Review</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="../data/phase9/dashboard_data.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-mark" aria-hidden="true">R</div>
+    <div>
+      <p class="eyebrow">RAVAN AI · PHASE 9</p>
+      <h1>Trajectory review</h1>
+    </div>
+    <div class="topbar-note">Held-out synthetic scenarios</div>
+  </header>
+
+  <main>
+    <section class="controls" aria-label="Scenario navigation">
+      <label class="control-label" for="episode-select">Episode</label>
+      <select id="episode-select"></select>
+      <button id="previous-button" class="quiet-button" type="button" aria-label="Previous sample">Previous</button>
+      <input id="step-slider" type="range" min="0" max="0" value="0" aria-label="Sample position">
+      <button id="next-button" class="quiet-button" type="button" aria-label="Next sample">Next</button>
+      <span id="step-readout" class="step-readout"></span>
+    </section>
+
+    <section class="overview-grid">
+      <article class="scenario-panel">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">SCENARIO</p>
+            <h2 id="scenario-title">Loading episode</h2>
+          </div>
+          <span id="scenario-family" class="family-pill"></span>
+        </div>
+        <p id="scenario-description" class="scenario-description"></p>
+        <div id="scenario-parameters" class="parameter-list"></div>
+      </article>
+
+      <article class="prediction-panel">
+        <p class="eyebrow">MODEL OUTPUT</p>
+        <div class="score-row">
+          <div id="score-value" class="score-value">—</div>
+          <div id="prediction-status" class="status-pill"></div>
+        </div>
+        <p class="score-caption">Estimated chance of the Phase 4 future conflict label within 3 seconds</p>
+        <div class="meter"><div id="score-meter" class="meter-fill"></div></div>
+        <div class="prediction-footer">
+          <span>Evaluation label</span>
+          <strong id="target-label">—</strong>
+        </div>
+      </article>
+
+      <article class="action-panel">
+        <p class="eyebrow">PHASE 7 RECOMMENDATION</p>
+        <h2 id="recommendation-title">—</h2>
+        <p id="recommendation-reason" class="reason-text"></p>
+        <div class="action-meta">
+          <span id="disagreement-pill" class="disagreement-pill"></span>
+          <span id="quality-status" class="quality-status"></span>
+        </div>
+      </article>
+    </section>
+
+    <section class="chart-panel">
+      <div class="section-heading chart-heading">
+        <div>
+          <p class="eyebrow">EPISODE CONTEXT</p>
+          <h2>Bumper gap over time</h2>
+        </div>
+        <div class="legend"><span class="legend-line"></span>Gap (m)<span class="legend-zero"></span>Contact boundary (0 m)</div>
+      </div>
+      <svg id="gap-chart" role="img" aria-label="Bumper gap over simulation time"></svg>
+      <p id="chart-caption" class="chart-caption"></p>
+    </section>
+
+    <section class="detail-grid">
+      <article class="indicator-panel">
+        <p class="eyebrow">CURRENT STATE</p>
+        <h2>Safety indicators</h2>
+        <div id="indicator-grid" class="indicator-grid"></div>
+      </article>
+      <article class="explanation-panel">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">PHASE 8 EXPLANATION</p>
+            <h2>What moved the score</h2>
+          </div>
+          <span class="method-tag">Exact logistic contributions</span>
+        </div>
+        <p class="explanation-intro">Signed contributions to model log-odds relative to the standardized reference. Positive values raise the score; negative values lower it.</p>
+        <div id="contribution-list" class="contribution-list"></div>
+        <p id="base-logit-note" class="base-logit-note"></p>
+      </article>
+    </section>
+
+    <footer class="footer-note">
+      <span>Research prototype · synthetic one-dimensional trajectories · advice only, no vehicle control</span>
+      <span id="data-provenance"></span>
+    </footer>
+  </main>
+</body>
+</html>

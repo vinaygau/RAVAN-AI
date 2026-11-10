@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "phase": 2,
+  "base_seed": 20261109,
+  "episodes_per_scenario": 20,
+  "time_step_s": 0.1,
+  "duration_s": [8.0, 12.0],
+  "parameter_ranges": {
+    "ego_initial_speed_mps": [10.0, 30.0],
+    "lead_initial_speed_mps": [5.0, 28.0],
+    "initial_gap_m": [10.0, 60.0],
+    "lead_length_m": [4.0, 5.0],
+    "lead_brake_onset_s": [2.0, 6.0],
+    "lead_deceleration_magnitude_mps2": [2.0, 6.0],
+    "ego_reaction_delay_s": [0.0, 1.5],
+    "ego_braking_magnitude_mps2": [2.0, 6.0]
+  },
+  "scenario_families": ["S1", "S2", "S3", "S4", "S5", "S6", "S7"],
+  "contact_handling": "Record the first contact sample and end the episode immediately; post-contact dynamics are not simulated.",
+  "labeling": "No risk or future-hazard labels are generated in Phase 2."
+}

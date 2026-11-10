@@ -1,0 +1,30 @@
+{
+  "pipeline_version": "phase3.1",
+  "input": "data\\phase2\\trajectories.csv",
+  "output": "data/phase3/trajectories_features.csv",
+  "episode_count": 140,
+  "sample_count": 11524,
+  "scenario_episode_counts": {
+    "S1": 20,
+    "S2": 20,
+    "S3": 20,
+    "S4": 20,
+    "S5": 20,
+    "S6": 20,
+    "S7": 20
+  },
+  "contact_episodes": 47,
+  "time_step_s": 0.1,
+  "feature_formula_mismatches_vs_source": {},
+  "feature_mismatch_total": 0,
+  "source_feature_audit_tolerance": "absolute 2e-5 or relative 5e-5, accounting for Phase 2 six-decimal state serialization",
+  "negative_speed_samples": 0,
+  "nonmonotonic_position_transitions": 0,
+  "irregular_time_intervals": 0,
+  "gap_m_range": [
+    -1.97087,
+    221.505848
+  ],
+  "derived_features_use_future_data": false,
+  "labels_generated": false
+}

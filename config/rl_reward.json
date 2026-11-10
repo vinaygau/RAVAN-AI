@@ -1,0 +1,16 @@
+{
+  "progress_per_m": 0.12,
+  "step_cost": -0.02,
+  "collision": -150.0,
+  "risk_exposure": -1.2,
+  "side_vehicle_exposure": -0.7,
+  "unsafe_lane_change": -0.6,
+  "abrupt_control_change": -0.025,
+  "unnecessary_braking": -0.08,
+  "unnecessary_handbrake": -0.4,
+  "boundary_proximity": -0.15,
+  "safe_gap_seconds": 1.6,
+  "risk_ttc_horizon_s": 5.0,
+  "speed_limit_mps": 27.0,
+  "speed_excess_per_mps": -0.025
+}

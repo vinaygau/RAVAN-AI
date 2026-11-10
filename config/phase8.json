@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0",
+  "phase": 8,
+  "model_artifact": "data/phase6/selected_model.joblib",
+  "input": "data/phase4/trajectories_labeled.csv",
+  "test_predictions": "data/phase6/test_predictions.csv",
+  "decision_trace": "data/phase7/decision_trace.csv",
+  "output": "data/phase8",
+  "attribution_method": "exact additive logistic-regression decomposition in standardized feature space",
+  "fidelity_tolerance_probability": 1e-9
+}

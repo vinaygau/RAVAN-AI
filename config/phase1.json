@@ -1,0 +1,151 @@
+{
+  "schema_version": "1.0",
+  "phase": 1,
+  "description": "Provisional configuration for the Ravan AI one-dimensional longitudinal scenario pilot.",
+  "units": {
+    "time": "s",
+    "position": "m",
+    "speed": "m/s",
+    "acceleration": "m/s^2",
+    "gap": "m"
+  },
+  "coordinate_convention": {
+    "axis": "one-dimensional; positive in direction of travel",
+    "vehicle_position": "front_bumper",
+    "ego_initial_front_x_m": 0.0,
+    "gap_formula": "lead_front_x_m - lead_length_m - ego_front_x_m",
+    "contact_condition": "gap_m <= 0"
+  },
+  "simulation": {
+    "time_step_s": 0.1,
+    "episode_duration_s": {
+      "min": 8.0,
+      "max": 12.0
+    },
+    "speed_cap_mps": 35.0,
+    "acceleration_bounds_mps2": {
+      "min": -8.0,
+      "max": 3.0
+    },
+    "update_equations": {
+      "speed_next": "clamp(speed + acceleration * dt, 0, speed_cap)",
+      "position_next": "if acceleration < 0 and speed + acceleration * dt < 0, integrate only to stop time (-speed / acceleration); otherwise position + speed * dt + 0.5 * acceleration * dt^2"
+    },
+    "synchronization": "Update ego and lead from the same time index using piecewise-constant acceleration for the step."
+  },
+  "sampling_envelope": {
+    "ego_initial_speed_mps": [10.0, 30.0],
+    "lead_initial_speed_mps": [5.0, 28.0],
+    "initial_bumper_gap_m": [10.0, 60.0],
+    "lead_length_m": [4.0, 5.0],
+    "lead_brake_onset_s": [2.0, 6.0],
+    "lead_deceleration_magnitude_mps2": [2.0, 6.0],
+    "ego_reaction_delay_s": [0.0, 1.5],
+    "ego_braking_magnitude_mps2": [2.0, 6.0]
+  },
+  "derived_features": {
+    "relative_speed_definition": "ego_speed_mps - lead_speed_mps",
+    "ttc_definition": "gap_m / relative_speed_mps only when gap_m > 0 and relative_speed_mps > 0",
+    "ttc_undefined_value": null,
+    "ttc_validity_flag": true,
+    "time_headway_definition": "gap_m / ego_speed_mps only when gap_m > 0 and ego_speed_mps > 0",
+    "drac_definition": "relative_speed_mps^2 / (2 * gap_m) only when relative_speed_mps > 0 and gap_m > 0"
+  },
+  "scenarios": [
+    {
+      "id": "S1",
+      "name": "steady_safe_following",
+      "ego_speed_mps": 15.0,
+      "lead_speed_mps": 15.0,
+      "initial_gap_m": 30.0,
+      "lead_braking": false,
+      "ego_response": "none",
+      "expected": "gap remains 30 m; TTC undefined; no contact"
+    },
+    {
+      "id": "S2",
+      "name": "closing_on_steady_lead",
+      "ego_speed_mps": 20.0,
+      "lead_speed_mps": 15.0,
+      "initial_gap_m": 30.0,
+      "lead_braking": false,
+      "ego_response": "none",
+      "expected": "gap decreases at 5 m/s until contact or episode end; initial TTC is 6 s"
+    },
+    {
+      "id": "S3",
+      "name": "lead_brakes_ego_no_response",
+      "ego_speed_mps": 20.0,
+      "lead_speed_mps": 20.0,
+      "initial_gap_m": 35.0,
+      "lead_braking": {
+        "onset_s": 2.0,
+        "deceleration_mps2": -4.0
+      },
+      "ego_response": "none",
+      "expected": "lead speed decreases after 2 s; gap then decreases; contact/event outcome is recorded"
+    },
+    {
+      "id": "S4",
+      "name": "lead_brakes_ego_delayed_response",
+      "ego_speed_mps": 20.0,
+      "lead_speed_mps": 20.0,
+      "initial_gap_m": 35.0,
+      "lead_braking": {
+        "onset_s": 2.0,
+        "deceleration_mps2": -4.0
+      },
+      "ego_response": {
+        "trigger": "lead_braking_onset",
+        "reaction_delay_s": 1.0,
+        "deceleration_mps2": -4.0
+      },
+      "expected": "ego braking begins at 3 s; same initial conditions as S3 enable comparison"
+    },
+    {
+      "id": "S5",
+      "name": "safe_braking_control",
+      "ego_speed_mps": 18.0,
+      "lead_speed_mps": 18.0,
+      "initial_gap_m": 50.0,
+      "lead_braking": {
+        "onset_s": 2.0,
+        "deceleration_mps2": -3.0
+      },
+      "ego_response": {
+        "trigger": "lead_braking_onset",
+        "reaction_delay_s": 0.0,
+        "deceleration_mps2": -4.0
+      },
+      "expected": "verify no contact and record minimum gap; this is a candidate control, not assumed safe by label"
+    },
+    {
+      "id": "S6",
+      "name": "non_closing_pair",
+      "ego_speed_mps": 12.0,
+      "lead_speed_mps": 18.0,
+      "initial_gap_m": 25.0,
+      "lead_braking": false,
+      "ego_response": "none",
+      "expected": "gap increases; TTC undefined and never zero"
+    },
+    {
+      "id": "S7",
+      "name": "vehicle_stops_without_negative_speed",
+      "ego_speed_mps": 5.0,
+      "lead_speed_mps": 5.0,
+      "initial_gap_m": 20.0,
+      "lead_braking": {
+        "onset_s": 1.0,
+        "deceleration_mps2": -6.0
+      },
+      "ego_response": {
+        "trigger": "episode_start",
+        "reaction_delay_s": 0.0,
+        "deceleration_mps2": -6.0
+      },
+      "expected": "both speeds clamp at zero; neither position decreases"
+    }
+  ],
+  "provisional_notice": "All parameter values and scenarios are research-pilot settings, not validated safety thresholds or real-world claims."
+}

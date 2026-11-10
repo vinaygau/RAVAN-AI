@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "phase": 6,
+  "input": "data/phase4/trajectories_labeled.csv",
+  "future_target": "future_conflict_within_3s",
+  "eligibility_column": "future_conflict_eligible",
+  "split_seed": 20261109,
+  "episode_split": {
+    "train": 0.7,
+    "validation": 0.15,
+    "test": 0.15,
+    "stratify_by": [
+      "scenario_id",
+      "episode_has_positive_target"
+    ]
+  },
+  "features": [
+    "ego_speed_mps",
+    "lead_speed_mps",
+    "ego_acceleration_mps2",
+    "lead_acceleration_mps2",
+    "gap_m",
+    "relative_speed_mps",
+    "ttc_s",
+    "ttc_valid",
+    "thw_s",
+    "thw_valid",
+    "drac_mps2",
+    "drac_valid"
+  ],
+  "models": [
+    "DummyPrior",
+    "LogisticRegression",
+    "DecisionTree",
+    "RandomForest"
+  ],
+  "selection_metric": "validation average precision (PR-AUC)",
+  "probability_threshold": 0.5,
+  "random_forest_estimators": 300,
+  "robustness_holdout": {
+    "metadata_field": "lead_deceleration_mps2",
+    "absolute_min_mps2": 5.0
+  },
+  "limitations": "Synthetic one-dimensional trajectories; labels are provisional TTC/contact surrogate events; frame-level metrics are correlated within episodes."
+}

@@ -1,0 +1,35 @@
+# Python bytecode and virtual environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Local credentials and environment overrides
+.env
+.env.*
+!.env.example
+ravanai_research.docx
+
+# Per-run telemetry and learned user-action history
+data/runs/
+data/learning/trial_error.json
+data/ui_preview_cockpit.png
+
+# Generated trajectory datasets and evaluation traces
+data/phase2/trajectories.csv
+data/phase3/trajectories_features.csv
+data/phase4/trajectories_labeled.csv
+data/phase5/physics_baseline.csv
+data/phase6/test_predictions.csv
+data/phase6/strong_braking_robustness_model.joblib
+data/phase7/decision_trace.csv
+data/phase8/test_attributions.csv
+data/contact_v2/phase2/trajectories.csv
+data/contact_v2/phase3/trajectories_features.csv
+data/contact_v2/phase4/trajectories_labeled.csv
+data/contact_v2/model/predictions.csv
+data/contact_v2/model/test_predictions.csv
+
+# Training checkpoints, TensorBoard logs, and long per-step RL trajectories
+data/rl_runs/
+data/rl_evaluations/

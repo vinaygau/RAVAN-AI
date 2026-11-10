@@ -1,0 +1,74 @@
+{
+  "protocol_version": "phase4.1",
+  "episode_count": 140,
+  "sample_count": 11524,
+  "future_horizon_s": 3.0,
+  "primary_event_rule": "At least one later sample in (t, t + 3 s] has TTC <= 3 s while TTC is valid, or sampled contact occurs in that window.",
+  "current_risk_category_counts": {
+    "critical": 731,
+    "high": 518,
+    "low": 9792,
+    "moderate": 483
+  },
+  "future_conflict_eligible": 8832,
+  "future_conflict_censored": 2692,
+  "future_conflict_counts": {
+    "0": 6781,
+    "1": 2051
+  },
+  "future_conflict_by_scenario": {
+    "S1": {
+      "eligible": 1340,
+      "positive": 0
+    },
+    "S2": {
+      "eligible": 875,
+      "positive": 722
+    },
+    "S3": {
+      "eligible": 1371,
+      "positive": 888
+    },
+    "S4": {
+      "eligible": 1026,
+      "positive": 441
+    },
+    "S5": {
+      "eligible": 1360,
+      "positive": 0
+    },
+    "S6": {
+      "eligible": 1430,
+      "positive": 0
+    },
+    "S7": {
+      "eligible": 1430,
+      "positive": 0
+    }
+  },
+  "future_contact_eligible": 8687,
+  "future_contact_censored": 2837,
+  "future_contact_counts": {
+    "0": 7444,
+    "1": 1243
+  },
+  "current_contact_samples": 47,
+  "ttc_boundary_sample_counts": {
+    "1.5": {
+      "exact": 0,
+      "within_0_05_s": 39
+    },
+    "3.0": {
+      "exact": 0,
+      "within_0_05_s": 24
+    },
+    "5.0": {
+      "exact": 0,
+      "within_0_05_s": 16
+    }
+  },
+  "episode_event_metadata_count": 140,
+  "future_values_used_only_for_labels": true,
+  "future_labels_in_feature_dictionary": false,
+  "limitations": "TTC thresholds are provisional surrogate-conflict criteria. The primary target is not a real-world collision probability; the secondary contact target is a severe outcome in this synthetic simulator."
+}

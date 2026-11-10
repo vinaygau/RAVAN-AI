@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "phase": 10,
+  "primary_target": "future_conflict_within_3s",
+  "primary_horizon_s": 3.0,
+  "feature_ablation_basic": [
+    "ego_speed_mps", "lead_speed_mps", "ego_acceleration_mps2", "lead_acceleration_mps2", "gap_m", "relative_speed_mps"
+  ],
+  "feature_ablation_safety": [
+    "ego_speed_mps", "lead_speed_mps", "ego_acceleration_mps2", "lead_acceleration_mps2", "gap_m", "relative_speed_mps", "ttc_s", "ttc_valid", "thw_s", "thw_valid", "drac_mps2", "drac_valid"
+  ],
+  "past_history_seconds": 1.0,
+  "observation_noise": {
+    "position_sigma_m": 0.25,
+    "speed_sigma_mps": 0.5,
+    "missingness_rate": 0.05,
+    "seed": 20261110
+  },
+  "label_sensitivity": {
+    "horizons_s": [2.0, 3.0, 4.0],
+    "future_ttc_thresholds_s": [2.0, 3.0, 4.0]
+  },
+  "note": "Feature/history ablations and observation sensitivity reuse the Phase 6 held-out episodes after the primary test was already examined; treat these as exploratory rather than confirmatory."
+}
