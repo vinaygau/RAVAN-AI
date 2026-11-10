@@ -11,6 +11,10 @@ The images below are rendered from the project’s Pygame dashboard and determin
   <img src="assets/screenshots/ravan-ai-agent-drive.png" alt="Ravan AI dashboard with Agent Drive enabled" width="49%" />
 </p>
 
+## Simulation video
+
+[Watch the 18-second Agent Drive simulation demo](assets/videos/ravan-ai-simulation-demo.mp4). The clip is rendered from the project's deterministic traffic simulation and Pygame dashboard. Recreate it with `python scripts/render_showcase_video.py` (FFmpeg must be installed and available on `PATH`).
+
 ## Run
 
 From this folder in PowerShell:
